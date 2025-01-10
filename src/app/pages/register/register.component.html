@@ -1,26 +1,69 @@
 <div class="register_container">
-  <form action="">
-    <h1>Signup Form</h1>
-    <div>
-      <label for="email">Email</label>
-      <input type="email" name="email" />
+  <form [formGroup]="registerForm" (submit)="registerUser()">
+    <h1>Sign up</h1>
+    @if (registerError) {
+    <p class="error">{{ registerError }}</p>
+    }
+    <div class="input">
+      <label for="email">Email</label> <br />
+      <input
+        type="email"
+        name="email"
+        id="email"
+        placeholder="e.g you@example.com"
+        formControlName="email"
+        autocomplete="email"
+      />
+      @if(registerForm.get("email")?.hasError('required')
+      &&(registerForm.get("email")?.touched)){
+      <p class="error">Email required</p>
+      } @else if(registerForm.get("email")?.hasError('email')
+      &&(registerForm.get("email")?.touched)){
+      <p class="error">Invalid email format</p>
+      }
     </div>
-    <div>
-      <label for="password">password</label>
-      <input type="email" name="password" />
+    <div class="input">
+      <label for="password">password</label><br />
+      <input
+        type="email"
+        name="password"
+        placeholder="Enter password"
+        formControlName="password"
+        id="password"
+        autocomplete="new-password"
+      />
+
+      @if(registerForm.get("password")?.hasError('required')
+      &&(registerForm.get("password")?.touched)){
+      <p class="error">Password required</p>
+      } @else if(registerForm.get("password")?.hasError('pattern')
+      &&(registerForm.get("password")?.touched)){
+
+      <div class="error">
+        Passwords must meet the following requirements:
+
+        <ul>
+          <li>At least one uppercase letter</li>
+          <li>At least one lowercase letter</li>
+          <li>Minimum length of 8 characters</li>
+          <li>Contain only letters and digits</li>
+        </ul>
+      </div>
+
+      }
     </div>
-    <button>Signup form</button>
-    <p>Already have an account? <a href="">Login</a></p>
-    <div>
+    <button class="btn">Sign up</button>
+    <p>Already have an account? <a href="/login">Login</a></p>
+    <div class="or">
       <span>Or</span>
     </div>
-    <div>
+    <div class="google" (click)="loginWithGoogle()">
       <img
         [ngSrc]="
           'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAODSrOYhUv2R2FW1iCqccTM1TQyHoesAnbA&s'
         "
-        width="55"
-        height="55"
+        width="33"
+        height="33"
         alt="Google"
       />
       Login with Google

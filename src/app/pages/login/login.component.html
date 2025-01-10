@@ -1,1 +1,55 @@
-<p>login works!</p>
+<div class="register_container">
+  <form [formGroup]="loginForm" (submit)="logInUser()">
+    <h1>Sign in</h1>
+    @if (loginError) {
+    <p class="error">{{ loginError }}</p>
+    }
+    <div class="input">
+      <label for="email">Email</label> <br />
+      <input
+        type="email"
+        name="email"
+        placeholder="e.g you@example.com"
+        formControlName="email"
+      />
+      @if(loginForm.get("email")?.hasError('required')
+      &&(loginForm.get("email")?.touched)){
+      <p class="error">Email required</p>
+      } @else if(loginForm.get("email")?.hasError('email')
+      &&(loginForm.get("email")?.touched)){
+      <p class="error">Invalid email format</p>
+      }
+    </div>
+    <div class="input">
+      <label for="password">password</label><br />
+      <input
+        type="email"
+        name="password"
+        placeholder="Enter password"
+        formControlName="password"
+      />
+      @if(loginForm.get("password")?.hasError('required')
+      &&(loginForm.get("password")?.touched)){
+      <p class="error">Password required</p>
+      }
+    </div>
+    <div class="reset"><a href="/reset-password">Forgot password?</a></div>
+
+    <button class="btn">Sign in</button>
+    <p>Don't have an account? <a href="">register</a></p>
+    <div class="or">
+      <span>Or</span>
+    </div>
+    <div class="google" (click)="loginWithGoogle()">
+      <img
+        [ngSrc]="
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAODSrOYhUv2R2FW1iCqccTM1TQyHoesAnbA&s'
+        "
+        width="33"
+        height="33"
+        alt="Google"
+      />
+      Login with Google
+    </div>
+  </form>
+</div>
